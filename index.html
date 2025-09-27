@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Мое Простое Web App</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding-top: 50px;
+            /* Установим фон, который соответствует теме Telegram */
+            background-color: var(--tg-theme-bg-color); 
+            color: var(--tg-theme-text-color);
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Привет из Telegram Web App!</h1>
+    <p>Нажмите кнопку, чтобы отправить данные боту.</p>
+    
+    <button id="sendDataButton">Отправить данные</button>
+
+    <script>
+        // Инициализация Web App
+        const tg = window.Telegram.WebApp;
+
+        // Показываем кнопку-меню внизу приложения
+        tg.MainButton.setText("Закрыть приложение");
+        tg.MainButton.show();
+
+        // Обработчик нажатия на кнопку-меню (в самом низу)
+        tg.MainButton.onClick(() => {
+            // Закрываем приложение
+            tg.close(); 
+        });
+
+        // Обработчик нажатия на обычную кнопку на странице
+        document.getElementById('sendDataButton').addEventListener('click', () => {
+            // Отправляем данные боту (это просто строка)
+            tg.sendData('Пользователь нажал кнопку "Отправить данные"');
+            
+            // Показываем временное уведомление
+            tg.showPopup({
+                title: 'Отправлено!',
+                message: 'Данные отправлены боту. Проверьте чат с ботом.'
+            });
+        });
+
+        // Можно изменить цвет и текст кнопки
+        tg.MainButton.setParams({ 
+            color: tg.themeParams.button_color,
+            text_color: tg.themeParams.button_text_color
+        });
+
+    </script>
+</body>
+</html>
